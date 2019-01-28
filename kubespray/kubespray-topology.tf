@@ -139,6 +139,7 @@ resource "nsxt_lb_service" "lb_service" {
   virtual_server_ids = ["${nsxt_lb_tcp_virtual_server.KUBE-API-VS.id}"]
   depends_on         = ["nsxt_logical_router_link_port_on_tier1.KUBE_DP1"]
 }
+
 resource "nsxt_lb_fast_tcp_application_profile" "timeout_60" {
   close_timeout = 60
   idle_timeout  = 60
@@ -163,6 +164,7 @@ resource "nsxt_lb_pool" "KUBE-API-POOL" {
     port       = "${var.KUBE_API_PORT}"
   }
 }
+
 resource "nsxt_lb_tcp_virtual_server" "KUBE-API-VS" {
   description                = "lb_virtual_server provisioned by terraform"
   display_name               = "${var.KUBE_VS_NAME}"
