@@ -9,9 +9,9 @@ TRUST_SSL_CERT = "true"
 
 T0_RTR = "t0-pks"
 
-TZ_OVERLAY = "tz-overlay"
+TZ_OVERLAY = "overlay-tz"
 
-EDGE_CLUSTER = "edge-cluster-pks"
+EDGE_CLUSTER = "edge-cluster-1"
 
 ## MGMT Scope and Tag
 
