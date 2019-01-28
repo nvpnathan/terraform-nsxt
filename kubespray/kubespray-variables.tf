@@ -104,7 +104,7 @@ variable "T0_LB_RP" {
 }
 variable "LB_ALGORITHM" {
   type        = "string"
-  description = "Which LBing algorithm to use"
+  description = "Which LBing algorithm to use ROUND_ROBIN, WEIGHTED_ROUND_ROBIN, LEAST_CONNECTION, WEIGHTED_LEAST_CONNECTION, IP_HASH"
 }
 variable "KUBE_API_PORT" {
   type        = "string"
