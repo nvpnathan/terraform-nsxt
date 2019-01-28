@@ -109,12 +109,12 @@ resource "nsxt_logical_router_downlink_port" "K8S_DP1" {
 
 ## Loadbalancer for API Server
 resource "nsxt_logical_router_link_port_on_tier0" "T1-KUBE-RP" {
-  display_name      = "port_on_tier0"
+  display_name      = "${var.T0_LB_RP}"
   logical_router_id = "${data.nsxt_logical_tier0_router.T0.id}"
 }
 
 resource "nsxt_logical_tier1_router" "KUBE-LB" {
-  display_name    = "kube-lb"
+  display_name    = "${var.T1_LB_NAME}"
   edge_cluster_id = "${data.nsxt_edge_cluster.EDGE-CLUSTER.id}"
 }
 
@@ -149,7 +149,7 @@ resource "nsxt_lb_source_ip_persistence_profile" "ip_profile" {
 }
 
 resource "nsxt_lb_pool" "KUBE-API-POOL" {
-  algorithm = "LEAST_CONNECTION"
+  algorithm = "${var.LB_ALGORITHM}"
   member {
     ip_address = "192.168.77.11"
     port       = "6443"
