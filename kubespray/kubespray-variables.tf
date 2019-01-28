@@ -106,3 +106,15 @@ variable "LB_ALGORITHM" {
   type        = "string"
   description = "Which LBing algorithm to use"
 }
+variable "KUBE_API_PORT" {
+  type        = "string"
+  description = "Kube API Port"
+}
+variable "KUBE_VS_NAME" {
+  type        = "string"
+  description = "LBer Virtual Server Display Name"
+}
+variable "KUBE_VIP" {
+  type        = "string"
+  description = "LBer VIP address"
+}

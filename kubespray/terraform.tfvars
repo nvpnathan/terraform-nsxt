@@ -42,3 +42,9 @@ T1_LB_NAME = "kube-lb"
 T0_LB_RP = "t0-lb-rp"
 
 LB_ALGORITHM = "LEAST_CONNECTION"
+
+KUBE_API_PORT = "6443"
+
+KUBE_VS_NAME = "kube-lb"
+
+KUBE_VIP = "192.168.76.250"

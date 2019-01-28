@@ -151,34 +151,34 @@ resource "nsxt_lb_source_ip_persistence_profile" "ip_profile" {
 resource "nsxt_lb_pool" "KUBE-API-POOL" {
   algorithm = "${var.LB_ALGORITHM}"
   member {
-    ip_address = "192.168.77.11"
-    port       = "6443"
+    ip_address = "${var.k8s_master_ips["0"]}"
+    port       = "${var.KUBE_API_PORT}"
   }
   member {
-    ip_address = "192.168.77.12"
-    port       = "6443"
+    ip_address = "${var.k8s_master_ips["1"]}"
+    port       = "${var.KUBE_API_PORT}"
   }
   member {
-    ip_address = "192.168.77.13"
-    port       = "6443"
+    ip_address = "${var.k8s_master_ips["2"]}"
+    port       = "${var.KUBE_API_PORT}"
   }
 }
 resource "nsxt_lb_tcp_virtual_server" "KUBE-API-VS" {
   description                = "lb_virtual_server provisioned by terraform"
-  display_name               = "kube-api"
+  display_name               = "${var.KUBE_VS_NAME}"
   access_log_enabled         = true
   application_profile_id     = "${nsxt_lb_fast_tcp_application_profile.timeout_60.id}"
   enabled                    = true
-  ip_address                 = "192.168.76.250"
-  ports                      = ["6443"]
-  default_pool_member_ports  = ["6443"]
+  ip_address                 = "${var.KUBE_VIP}"
+  ports                      = ["${var.KUBE_API_PORT}"]
+  default_pool_member_ports  = ["${var.KUBE_API_PORT}"]
   max_concurrent_connections = 50
   max_new_connection_rate    = 20
   persistence_profile_id     = "${nsxt_lb_source_ip_persistence_profile.ip_profile.id}"
   pool_id                    = "${nsxt_lb_pool.KUBE-API-POOL.id}"
 
   tag {
-    scope = "kube"
-    tag   = "api"
+    scope = "${var.COMP_SCOPE}"
+    tag   = "${var.API_TAG}"
   }
 }
