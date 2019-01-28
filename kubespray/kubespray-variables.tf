@@ -94,26 +94,32 @@ variable "LB_SIZE" {
   type        = "string"
   description = "Size of NSX LBer"
 }
+
 variable "T1_LB_NAME" {
   type        = "string"
   description = "Name of the T1 LBer"
 }
+
 variable "T0_LB_RP" {
   type        = "string"
   description = "Name of the router port"
 }
+
 variable "LB_ALGORITHM" {
   type        = "string"
   description = "Which LBing algorithm to use ROUND_ROBIN, WEIGHTED_ROUND_ROBIN, LEAST_CONNECTION, WEIGHTED_LEAST_CONNECTION, IP_HASH"
 }
+
 variable "KUBE_API_PORT" {
   type        = "string"
   description = "Kube API Port"
 }
+
 variable "KUBE_VS_NAME" {
   type        = "string"
   description = "LBer Virtual Server Display Name"
 }
+
 variable "KUBE_VIP" {
   type        = "string"
   description = "LBer VIP address"
