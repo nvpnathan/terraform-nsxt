@@ -11,17 +11,96 @@ data "nsxt_transport_zone" "TZ-OVERLAY" {
   display_name = "${var.TZ_OVERLAY}"
 }
 
-data "nsxt_logical_tier0_router" "T0" {
-  display_name = "${var.T0_RTR}"
+data "nsxt_transport_zone" "TZ-VLAN" {
+  display_name = "${var.TZ_VLAN}"
+  transport_type = "VLAN"
 }
+
+#data "nsxt_logical_tier0_router" "T0" {
+#  display_name = "${var.T0_RTR}"
+#}
 
 data "nsxt_edge_cluster" "EDGE-CLUSTER" {
   display_name = "${var.EDGE_CLUSTER}"
 }
 
+## Create Uplink VLAN LS
+
+resource "nsxt_logical_switch" "T0_UPLINK_VLAN_LS" {
+  description       = "T0 Uplink VLAN LS provisioned by Terraform"
+  display_name      = "${var.T0_UPLINK_VLAN_NAME}"
+  transport_zone_id = "${data.nsxt_transport_zone.TZ-VLAN.id}"
+  vlan              = "${var.T0_UPLINK_VLAN_ID}"
+
+  tag = {
+    scope = "${var.T0_UPLINK_SCOPE}"
+    tag   = "${var.T0_UPLINK_TAG}"
+  }
+}
+
+## Create T0 Router
+
+resource "nsxt_logical_tier0_router" "TIER0_ROUTER" {
+  display_name           = "${var.T0_RTR}"
+  description            = "ACTIVE-STANDBY Tier0 router provisioned by Terraform"
+  high_availability_mode = "ACTIVE_STANDBY"
+  edge_cluster_id        = "${data.nsxt_edge_cluster.EDGE-CLUSTER.id}"
+
+  tag {
+    scope = "${var.T0_SCOPE}"
+    tag   = "${var.T0_TAG}"
+  }
+}
+
+resource "nsxt_logical_port" "LOGICAL_PORT_UPLINK1" {
+  admin_state       = "UP"
+  description       = "LP1 provisioned by Terraform"
+  display_name      = "lsp_for_uplink_1"
+  logical_switch_id = "${nsxt_logical_switch.T0_UPLINK_VLAN_LS.id}"
+
+  tag {
+    scope = "PKS"
+    tag   = "PORT"
+  }
+}
+
+#resource "nsxt_logical_router_link_port_on_tier0" "TIER0_LINK_PORT1" {
+#  description                   = "TIER0_PORT1 provisioned by Terraform"
+#  display_name                  = "t0_uplink_1"
+#  logical_router_id             = "${nsxt_logical_tier0_router.TIER0_ROUTER.id}"
+
+#  tag {
+#    scope = "PKS"
+#    tag   = "T0PORT1"
+#  }
+#}
+
+resource "nsxt_logical_port" "LOGICAL_PORT_UPLINK2" {
+  admin_state       = "UP"
+  description       = "LP1 provisioned by Terraform"
+  display_name      = "lsp_for_uplink_2"
+  logical_switch_id = "${nsxt_logical_switch.T0_UPLINK_VLAN_LS.id}"
+
+  tag {
+    scope = "PKS"
+    tag   = "PORT"
+  }
+}
+
+#resource "nsxt_logical_router_link_port_on_tier0" "TIER0_LINK_PORT2" {
+#  description                   = "TIER0_PORT1 provisioned by Terraform"
+#  display_name                  = "t0_uplink_2"
+#  logical_router_id             = "${nsxt_logical_tier0_router.TIER0_ROUTER.id}"
+
+#  tag {
+#    scope = "PKS"
+#    tag   = "T0PORT1"
+#  }
+#}
+
 ## Create MGMT and Compute SNAT Rules
 resource "nsxt_nat_rule" "rule1" {
-  logical_router_id    = "${data.nsxt_logical_tier0_router.T0.id}"
+  logical_router_id    = "${nsxt_logical_tier0_router.TIER0_ROUTER.id}"
   description          = "PKS MGMT NAT provisioned by Terraform"
   display_name         = "${var.MGMT_SNAT}"
   action               = "SNAT"
@@ -38,7 +117,7 @@ resource "nsxt_nat_rule" "rule1" {
 }
 
 resource "nsxt_nat_rule" "rule2" {
-  logical_router_id    = "${data.nsxt_logical_tier0_router.T0.id}"
+  logical_router_id    = "${nsxt_logical_tier0_router.TIER0_ROUTER.id}"
   description          = "PKS COMPUTE SNAT provisioned by Terraform"
   display_name         = "${var.COMP_SNAT}"
   action               = "SNAT"
@@ -56,7 +135,7 @@ resource "nsxt_nat_rule" "rule2" {
 
 ## Create MGMT DNAT Rules
 resource "nsxt_nat_rule" "rule3" {
-  logical_router_id         = "${data.nsxt_logical_tier0_router.T0.id}"
+  logical_router_id         = "${nsxt_logical_tier0_router.TIER0_ROUTER.id}"
   description               = "PKS Ops-Man DNAT provisioned by Terraform"
   display_name              = "${var.OPS_MAN_DNAT}"
   action                    = "DNAT"
@@ -73,7 +152,7 @@ resource "nsxt_nat_rule" "rule3" {
 }
 
 resource "nsxt_nat_rule" "rule4" {
-  logical_router_id         = "${data.nsxt_logical_tier0_router.T0.id}"
+  logical_router_id         = "${nsxt_logical_tier0_router.TIER0_ROUTER.id}"
   description               = "PKS BOSH DNAT provisioned by Terraform"
   display_name              = "${var.BOSH_DNAT}"
   action                    = "DNAT"
@@ -90,7 +169,7 @@ resource "nsxt_nat_rule" "rule4" {
 }
 
 resource "nsxt_nat_rule" "rule5" {
-  logical_router_id         = "${data.nsxt_logical_tier0_router.T0.id}"
+  logical_router_id         = "${nsxt_logical_tier0_router.TIER0_ROUTER.id}"
   description               = "PKS Controller DNAT provisioned by Terraform"
   display_name              = "${var.PKS_CTRL_DNAT}"
   action                    = "DNAT"
@@ -107,7 +186,7 @@ resource "nsxt_nat_rule" "rule5" {
 }
 
 resource "nsxt_nat_rule" "rule6" {
-  logical_router_id         = "${data.nsxt_logical_tier0_router.T0.id}"
+  logical_router_id         = "${nsxt_logical_tier0_router.TIER0_ROUTER.id}"
   description               = "PKS Harbor DNAT provisioned by Terraform"
   display_name              = "${var.HARBOR_DNAT}"
   action                    = "DNAT"
@@ -127,7 +206,6 @@ resource "nsxt_nat_rule" "rule6" {
 resource "nsxt_logical_tier1_router" "T1-MGMT" {
   description                 = "T1 provisioned by Terraform"
   display_name                = "${var.T1_MGMT_NAME}"
-  failover_mode               = "PREEMPTIVE"
   enable_router_advertisement = "true"
   advertise_connected_routes  = "true"
 
@@ -141,7 +219,7 @@ resource "nsxt_logical_tier1_router" "T1-MGMT" {
 resource "nsxt_logical_router_link_port_on_tier0" "T0-MGMT-RP" {
   # description = "${nsxt_logical_router_link_port_on_tier0.T0-RP.display_name} to ${nsxt_logical_router_link_port_on_tier1.T1-RP.display_name}"
   display_name      = "${var.T0_MGMT_RP}"
-  logical_router_id = "${data.nsxt_logical_tier0_router.T0.id}"
+  logical_router_id = "${nsxt_logical_tier0_router.TIER0_ROUTER.id}"
 
   tag = [{
     scope = "${var.MGMT_SCOPE}"
@@ -209,7 +287,6 @@ resource "nsxt_logical_router_downlink_port" "MGMT_DP1" {
 resource "nsxt_logical_tier1_router" "T1-K8S" {
   description                 = "T1 provisioned by Terraform"
   display_name                = "${var.T1_K8S_NAME}"
-  failover_mode               = "PREEMPTIVE"
   enable_router_advertisement = "true"
   advertise_connected_routes  = "true"
 
@@ -223,7 +300,7 @@ resource "nsxt_logical_tier1_router" "T1-K8S" {
 resource "nsxt_logical_router_link_port_on_tier0" "T0-K8S-RP" {
   # description = "${nsxt_logical_router_link_port_on_tier0.T0-RP.display_name} to ${nsxt_logical_router_link_port_on_tier1.T1-RP.display_name}"
   display_name      = "${var.T0_K8S_RP}"
-  logical_router_id = "${data.nsxt_logical_tier0_router.T0.id}"
+  logical_router_id = "${nsxt_logical_tier0_router.TIER0_ROUTER.id}"
 
   tag = {
     scope = "${var.COMP_SCOPE}"
@@ -286,3 +363,57 @@ resource "nsxt_logical_router_downlink_port" "K8S_DP1" {
     tag   = "${var.COMP_TAG}"
   }
 }
+
+## Create IP Blocks
+
+resource "nsxt_ip_block" "node_ip_block" {
+  display_name = "${var.NODE_IP_BLOCK}"
+  cidr         = "${var.NODE_IP_BLOCK_CIDR}"
+}
+
+resource "nsxt_ip_block_subnet" "ip_block_node_subnet" {
+  description  = "node_ip_block_subnet provisioned by Terraform"
+  display_name = "${var.NODE_IP_BLOCK_SUBNET}"
+  block_id     = "${nsxt_ip_block.node_ip_block.id}"
+  size         = "${var.NODE_SUBNET_SIZE}"
+
+  tag = {
+    scope = "${var.NODE_SCOPE}"
+    tag   = "${var.NODE_TAG}"
+  }
+}
+
+resource "nsxt_ip_block" "pod_ip_block" {
+  display_name = "${var.POD_IP_BLOCK}"
+  cidr         = "${var.POD_IP_BLOCK_CIDR}"
+}
+
+resource "nsxt_ip_block_subnet" "ip_block_pod_subnet" {
+  description  = "pod_ip_block_subnet provisioned by Terraform"
+  display_name = "${var.POD_IP_BLOCK_SUBNET}"
+  block_id     = "${nsxt_ip_block.pod_ip_block.id}"
+  size         = "${var.POD_SUBNET_SIZE}"
+
+  tag = {
+    scope = "${var.POD_SCOPE}"
+    tag   = "${var.POD_TAG}"
+  }
+}
+
+## Create VIP Pools
+
+resource "nsxt_ip_pool" "VIP_IP_POOL1" {
+  description = "ip_pool provisioned by Terraform"
+  display_name = "${var.IP_POOL_PKS_VIPS1}"
+
+  tag = {
+    scope = "${var.POOL1_SCOPE}"
+    tag   = "${var.POOL1_TAG}"
+  }
+
+  subnet = {
+    allocation_ranges = ["${var.VIP_IP_POOL1_RANGE}"]
+    cidr              = "${var.VIP_IP_POOL1_CIDR}"
+  }
+}
+

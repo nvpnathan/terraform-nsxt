@@ -17,19 +17,71 @@ variable "TRUST_SSL_CERT" {
   description = "whether to trust ssl cert presented by server"
 }
 
-variable "T0_RTR" {
-  type        = "string"
-  description = "name of the T0 router"
-}
+## NSX Data Collection
 
 variable "TZ_OVERLAY" {
   type        = "string"
   description = "name of the overlay transport zone"
 }
 
+variable "TZ_VLAN" {
+  type        = "string"
+  description = "name of the vlan transport zone"
+}
+
 variable "EDGE_CLUSTER" {
   type        = "string"
   description = "name of the nsx edge cluster"
+}
+
+## Uplink VLAN LS
+
+variable "T0_UPLINK_VLAN_NAME" {
+  type        = "string"
+  description = "Name of the T0 VLAN Uplink Logical Switch"
+}
+
+variable "T0_UPLINK_VLAN_ID" {
+  type        = "string"
+  description = "T0 Uplink VLAN ID"
+}
+
+variable "T0_UPLINK_SCOPE" {
+  type        = "string"
+  description = "T0 Scope value"
+}
+
+variable "T0_UPLINK_TAG" {
+  type        = "string"
+  description = "T0 Tag value"
+}
+
+## T0 Router
+variable "T0_RTR" {
+  type        = "string"
+  description = "name of the T0 router"
+}
+
+variable "T0_SCOPE" {
+  type        = "string"
+  description = "T0 Scope value"
+}
+
+## T0 Router Ports
+
+variable "T0_UPLINK1_IP" {
+  type        = "string"
+  description = "T0 Uplink 1 IP 1.1.1.1/24 format"
+}
+
+variable "T0_UPLINK2_IP" {
+  type        = "string"
+  description = "T0 Uplink 2 IP 1.1.1.2/24 format"
+}
+
+variable "T0_TAG" {
+  type        = "string"
+  description = "T0 Tag value"
 }
 
 ## MGMT Scope and Tag
@@ -202,4 +254,93 @@ variable "LP_K8S_NAME" {
 variable "T1_K8S_IP_NET" {
   type        = "string"
   description = "K8s network gateway address"
+}
+
+## IP Block variables
+
+variable "NODE_IP_BLOCK" {
+  type        = "string"
+  description = "Display name of the Nodes IP Block"
+}
+
+variable "NODE_IP_BLOCK_CIDR" {
+  type        = "string"
+  description = "CIDR format for the Nodes IP Block"
+}
+
+variable "NODE_IP_BLOCK_SUBNET" {
+  type        = "string"
+  description = "Display name of the Nodes IP Block Subnet"
+}
+
+variable "NODE_SUBNET_SIZE" {
+  type        = "string"
+  description = "Subnet size of the Nodes IP Block"
+}
+
+variable "NODE_SCOPE" {
+  type        = "string"
+  description = "Node Scope value"
+}
+
+variable "NODE_TAG" {
+  type        = "string"
+  description = "Node Tag value"
+}
+
+variable "POD_IP_BLOCK" {
+  type        = "string"
+  description = "Display name of the Pods IP Block"
+}
+
+variable "POD_IP_BLOCK_CIDR" {
+  type        = "string"
+  description = "CIDR format for the Pods IP Block"
+}
+
+variable "POD_IP_BLOCK_SUBNET" {
+  type        = "string"
+  description = "Display name of the Pods IP Block Subnet"
+}
+
+variable "POD_SUBNET_SIZE" {
+  type        = "string"
+  description = "Subnet size of the Pods IP Block"
+}
+
+variable "POD_SCOPE" {
+  type        = "string"
+  description = "Pod Scope value"
+}
+
+variable "POD_TAG" {
+  type        = "string"
+  description = "Pod Tag value"
+}
+
+## VIP Pool variables
+
+variable "IP_POOL_PKS_VIPS1" {
+  type        = "string"
+  description = "Display name of the Pods IP Block Subnet"
+}
+
+variable "POOL1_SCOPE" {
+  type        = "string"
+  description = "Pod Scope value"
+}
+
+variable "POOL1_TAG" {
+  type        = "string"
+  description = "Pod Tag value"
+}
+
+variable "VIP_IP_POOL1_RANGE" {
+  type        = "string"
+  description = "IP Pool range 1.1.1.10-1.1.1.250 format"
+}
+
+variable "VIP_IP_POOL1_CIDR" {
+  type        = "string"
+  description = "IP Pool CIDR for the Range"
 }

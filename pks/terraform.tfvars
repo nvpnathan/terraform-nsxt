@@ -7,11 +7,37 @@ NSX_PASSWORD = "VMware1!"
 
 TRUST_SSL_CERT = "true"
 
-T0_RTR = "t0-pks"
+## NSX Data collection
 
 TZ_OVERLAY = "overlay-tz"
 
+TZ_VLAN = "vlan-tz"
+
 EDGE_CLUSTER = "edge-cluster-1"
+
+## T0 Uplink VLAN LS
+
+T0_UPLINK_VLAN_NAME = "uplink-vlan-ls"
+
+T0_UPLINK_VLAN_ID = "71"
+
+T0_UPLINK_SCOPE = "PKS"
+
+T0_UPLINK_TAG = "T0-Uplink"
+
+## T0 Router
+
+T0_RTR = "t0-pks"
+
+T0_SCOPE = "PKS"
+
+T0_TAG = "T0"
+
+## T0 Ports
+
+T0_UPLINK1_IP = "192.168.71.8/24"
+
+T0_UPLINK2_IP = "192.168.71.9/24"
 
 ## MGMT Scope and Tag
 
@@ -41,25 +67,25 @@ COMP_TNET = "192.168.76.50"
 
 ## Create MGMT DNAT Rules
 
-OPS_MAN_DNAT = "Ops-Man-DNAT"
+OPS_MAN_DNAT = "ops-man-dnat"
 
 OPS_MAN_TIP = "172.31.0.2"
 
 OPS_MAN_DIP = "192.168.76.2"
 
-BOSH_DNAT = "PKS-Controller-DNAT"
+BOSH_DNAT = "pks-controller-dnat"
 
 BOSH_TIP = "172.31.0.3"
 
 BOSH_DIP = "192.168.76.3"
 
-PKS_CTRL_DNAT = "PKS-Controller-DNAT"
+PKS_CTRL_DNAT = "pks-controller-dnat"
 
 PKS_CTRL_TIP = "172.31.0.4"
 
 PKS_CTRL_DIP = "192.168.76.4"
 
-HARBOR_DNAT = "Harbor-DNAT"
+HARBOR_DNAT = "harbor-dnat"
 
 HARBOR_TIP = "172.31.0.5"
 
@@ -79,12 +105,50 @@ T1_MGMT_IP_NET = "172.31.0.1/24"
 
 ## PKS K8s Worker Node Topology Variables
 
-T1_K8S_NAME = "t1-pks-service"
+T1_K8S_NAME = "t1-data-services"
 
 T0_K8S_RP = "t0-service-rp"
 
-LS_K8S_NAME = "ls-pks-service"
+LS_K8S_NAME = "ls-data-services"
 
-LP_K8S_NAME = "lp-pks-service"
+LP_K8S_NAME = "lp-data-services"
 
 T1_K8S_IP_NET = "172.31.2.1/23"
+
+## IP Block variables
+
+NODE_IP_BLOCK = "ip-block-pks-nodes-snat"
+
+NODE_IP_BLOCK_CIDR = "172.15.0.0/16"
+
+NODE_IP_BLOCK_SUBNET = "ip-block-pks-node-subnet"
+
+NODE_SUBNET_SIZE = "16"
+
+NODE_SCOPE = "PKS-BLOCK"
+
+NODE_TAG = "NODE"
+
+POD_IP_BLOCK = "ip-block-pks-nodes-snat"
+
+POD_IP_BLOCK_CIDR = "172.16.0.0/16"
+
+POD_IP_BLOCK_SUBNET = "ip-block-pks-pod-subnet"
+
+POD_SUBNET_SIZE = "16"
+
+POD_SCOPE = "PKS-BLOCK"
+
+POD_TAG = "POD"
+
+## VIP Pool variables
+
+IP_POOL_PKS_VIPS1 = "ip-pool1-vips"
+
+POOL1_SCOPE = "PKS"
+
+POOL1_TAG = "POOL"
+
+VIP_IP_POOL1_RANGE = "192.168.75.10-192.168.75.250" 
+
+VIP_IP_POOL1_CIDR = "192.168.75.0/24"
