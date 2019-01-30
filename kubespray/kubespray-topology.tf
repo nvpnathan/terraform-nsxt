@@ -19,11 +19,11 @@ data "nsxt_edge_cluster" "EDGE-CLUSTER" {
   display_name = "${var.EDGE_CLUSTER}"
 }
 
-data "vsphere_network" "KUBE-LS" {
-    name = "${nsxt_logical_switch.LS-K8S-KUBE.display_name}"
-    datacenter_id = "${data.vsphere_datacenter.dc.id}"
-    depends_on = ["nsxt_logical_switch.LS-K8S-KUBE"]
-}
+#data "vsphere_network" "KUBE-LS" {
+#    name = "${nsxt_logical_switch.LS-K8S-KUBE.display_name}"
+#    datacenter_id = "${data.vsphere_datacenter.dc.id}"
+#    depends_on = ["nsxt_logical_switch.LS-K8S-KUBE"]
+#}
 
 ## Create Kube K8s Worker Nodes T1 Router.
 resource "nsxt_logical_tier1_router" "T1-K8S" {
@@ -116,6 +116,8 @@ resource "nsxt_logical_router_link_port_on_tier0" "T1-KUBE-RP" {
 resource "nsxt_logical_tier1_router" "KUBE-LB" {
   display_name    = "${var.T1_LB_NAME}"
   edge_cluster_id = "${data.nsxt_edge_cluster.EDGE-CLUSTER.id}"
+  enable_router_advertisement = true
+  advertise_lb_vip_routes     = true
 }
 
 resource "nsxt_logical_router_link_port_on_tier1" "KUBE_DP1" {
@@ -123,9 +125,68 @@ resource "nsxt_logical_router_link_port_on_tier1" "KUBE_DP1" {
   linked_logical_router_port_id = "${nsxt_logical_router_link_port_on_tier0.T1-KUBE-RP.id}"
 }
 
+resource "nsxt_logical_switch" "LS-LB-KUBE" {
+  count             = 1
+  admin_state       = "UP"
+  description       = "Kube comp provisioned by Terraform"
+  display_name      = "${var.LS_LB_NAME}"
+  transport_zone_id = "${data.nsxt_transport_zone.TZ-OVERLAY.id}"
+  replication_mode  = "MTEP"
+
+  tag = {
+    scope = "${var.COMP_SCOPE}"
+    tag   = "${var.API_TAG}"
+  }
+}
+
+## Master NS Group - dynamic membership
+
+resource "nsxt_ns_group" "KUBE_API_NSG" {
+  description  = "NG provisioned by Terraform"
+  display_name = "${var.KUBE_API_NSG}"
+
+  membership_criteria {
+    target_type = "LogicalPort"
+    scope       = "kube"
+    tag         = "api"
+  }
+
+  tag {
+    scope = "kube-api"
+    tag   = "nsg"
+  }
+}
+
+resource "nsxt_logical_router_downlink_port" "LB_DP1" {
+  count                         = 1
+  description                   = "LIF-LB provisioned by Terraform"
+  display_name                  = "LIF-LB"
+  logical_router_id             = "${nsxt_logical_tier1_router.KUBE-LB.id}"
+  linked_logical_switch_port_id = "${nsxt_logical_port.LP-LB-KUBE.id}"
+  ip_address                    = "${var.T1_LB_IP_NET}"
+
+  tag = {
+    scope = "${var.COMP_SCOPE}"
+    tag   = "${var.API_TAG}"
+  }
+}
+
+resource "nsxt_logical_port" "LP-LB-KUBE" {
+  count             = 1
+  admin_state       = "UP"
+  description       = "LP-LB provisioned by Terraform"
+  display_name      = "${var.LP_K8S_NAME}"
+  logical_switch_id = "${nsxt_logical_switch.LS-LB-KUBE.id}"
+
+  tag = {
+    scope = "${var.COMP_SCOPE}"
+    tag   = "${var.COMP_TAG}"
+  }
+}
+
 resource "nsxt_lb_service" "lb_service" {
   description  = "lb_service provisioned by Terraform"
-  display_name = "lb_service"
+  display_name = "${var.KUBE_LB_NAME}"
 
   tag = {
     scope = "${var.COMP_SCOPE}"
@@ -151,18 +212,22 @@ resource "nsxt_lb_source_ip_persistence_profile" "ip_profile" {
 
 resource "nsxt_lb_pool" "KUBE-API-POOL" {
   algorithm = "${var.LB_ALGORITHM}"
-  member {
-    ip_address = "${var.k8s_master_ips["0"]}"
-    port       = "${var.KUBE_API_PORT}"
+  snat_translation {
+    type          = "SNAT_AUTO_MAP"
+    port_overload = "32"
   }
-  member {
-    ip_address = "${var.k8s_master_ips["1"]}"
-    port       = "${var.KUBE_API_PORT}"
-  }
-  member {
-    ip_address = "${var.k8s_master_ips["2"]}"
-    port       = "${var.KUBE_API_PORT}"
-  }
+
+  member_group {
+    ip_version_filter   = "IPV4"
+    limit_ip_list_size  = true
+    max_ip_list_size    = "3"
+    port                = "6443"
+
+    grouping_object {
+      target_type = "NSGroup"
+      target_id   = "${nsxt_ns_group.KUBE_API_NSG.id}"
+      }
+    }  
 }
 
 resource "nsxt_lb_tcp_virtual_server" "KUBE-API-VS" {
