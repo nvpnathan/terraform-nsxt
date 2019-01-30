@@ -1,3 +1,7 @@
+#===========================#
+# NSX Variables             #
+#===========================#
+
 ## Global provider variables
 variable "NSX_MANAGER" {
   type        = "string"
@@ -32,19 +36,7 @@ variable "EDGE_CLUSTER" {
   description = "name of the nsx edge cluster"
 }
 
-## MGMT Scope and Tag
-
-variable "MGMT_SCOPE" {
-  type        = "string"
-  description = "name of the mgmt scope"
-}
-
-variable "MGMT_TAG" {
-  type        = "string"
-  description = "name of the mgmt tag"
-}
-
-## Compute Scope and Tag
+## Compute Scope and Tags
 
 variable "COMP_SCOPE" {
   type        = "string"
@@ -61,7 +53,7 @@ variable "API_TAG" {
   description = "name of the api tag"
 }
 
-## PKS K8s Worker Node Topology Variables
+## Kube K8s Worker Node Topology Variables
 
 variable "T1_K8S_NAME" {
   type        = "string"
@@ -90,6 +82,11 @@ variable "T1_K8S_IP_NET" {
 
 ## Loadbalancer variables
 
+variable "KUBE_API_NSG" {
+  type        = "string"
+  description = "NSG Display Name"
+}
+
 variable "LB_SIZE" {
   type        = "string"
   description = "Size of NSX LBer"
@@ -103,6 +100,21 @@ variable "T1_LB_NAME" {
 variable "T0_LB_RP" {
   type        = "string"
   description = "Name of the router port"
+}
+
+variable "LS_LB_NAME" {
+  type        = "string"
+  description = "name of the Kube LB logical switch"
+}
+
+variable "LP_LB_NAME" {
+  type        = "string"
+  description = "name of the Kube LB port on LB logical switch"
+}
+
+variable "T1_LB_IP_NET" {
+  type        = "string"
+  description = "LB network gateway address"
 }
 
 variable "LB_ALGORITHM" {
@@ -123,4 +135,9 @@ variable "KUBE_VS_NAME" {
 variable "KUBE_VIP" {
   type        = "string"
   description = "LBer VIP address"
+}
+
+variable "KUBE_LB_NAME" {
+  type        = "string"
+  description = "LBer Display Name"
 }
