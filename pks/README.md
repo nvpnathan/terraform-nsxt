@@ -17,17 +17,27 @@ In this repo you will see 4 different folders representing a certain network arc
 
 #### [NAT](nat/README.md)
 
+<details><summary>NAT Diagram</summary>
 <img src="images/nat-diagram.png">
+</details>
 
 #### [Routed](routed/README.md)
 
+<details><summary>Routed Diagram</summary>
 <img src="images/routed-diagram.png">
+</details>
 
 #### [Hybrid](hybrid/README.md)
 
+<details><summary>Hybrid Diagram</summary>
 <img src="images/hybrid-diagram.png">
+</details>
 
-#### [Multi-T0](multi-t0/README.md) 
+#### [Multi-T0](multi-t0/README.md)
+
+<details><summary>Hybrid Diagram</summary>
+<img src="images/multi-t0-diagram.png">
+</details>
 
 ## NSX-T Networks and purpose
 
