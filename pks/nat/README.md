@@ -6,6 +6,8 @@ This topology uses NAT for all Management and Kubernetes cluster(s) logical netw
 
 In this topology the Kubernetes Node networks are Private Networks that are allocated from the **IP Block** for the **K8s Cluster Networks**. This configuration is done by putting a checkmark in the **NAT mode** box in the PKS tile in Opsman.
 
+<img src="../images/nat-diagram.png">
+
 ### It expects this:
 * NSX Manager
 * NSX Controllers
@@ -39,5 +41,3 @@ In this topology the Kubernetes Node networks are Private Networks that are allo
 * T0 Uplink Ports
 * HA VIP
 * Static Route on the Physical Router for the IP Pool for VIPs
-
-<img src="../images/nat-diagram.png">
