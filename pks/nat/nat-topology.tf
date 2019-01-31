@@ -284,10 +284,10 @@ resource "nsxt_logical_router_downlink_port" "MGMT_DP1" {
   }]
 }
 
-## Create PKS K8s Worker Nodes T1 Router.
-resource "nsxt_logical_tier1_router" "T1-K8S" {
+## Create Data Services T1 Router.
+resource "nsxt_logical_tier1_router" "T1-DATA-SVCS" {
   description                 = "T1 provisioned by Terraform"
-  display_name                = "${var.T1_K8S_NAME}"
+  display_name                = "${var.T1_DATA_SVCS_NAME}"
   enable_router_advertisement = "true"
   advertise_connected_routes  = "true"
 
@@ -297,10 +297,10 @@ resource "nsxt_logical_tier1_router" "T1-K8S" {
   }
 }
 
-## Connect PKS K8S T1 to T0.
-resource "nsxt_logical_router_link_port_on_tier0" "T0-K8S-RP" {
+## Connect Data Services T1 to T0.
+resource "nsxt_logical_router_link_port_on_tier0" "T0-DATA-SVCS-RP" {
   # description = "${nsxt_logical_router_link_port_on_tier0.T0-RP.display_name} to ${nsxt_logical_router_link_port_on_tier1.T1-RP.display_name}"
-  display_name      = "${var.T0_K8S_RP}"
+  display_name      = "${var.T0_DATA_SVCS_RP}"
   logical_router_id = "${nsxt_logical_tier0_router.TIER0_ROUTER.id}"
 
   tag = {
@@ -309,11 +309,11 @@ resource "nsxt_logical_router_link_port_on_tier0" "T0-K8S-RP" {
   }
 }
 
-resource "nsxt_logical_router_link_port_on_tier1" "T1-K8S-RP" {
+resource "nsxt_logical_router_link_port_on_tier1" "T1-DATA-SVCS-RP" {
   # description = "${nsxt_logical_router_link_port_on_tier0.T0-RP.display_name} to ${nsxt_logical_router_link_port_on_tier1.T1-RP.display_name}"
-  display_name                  = "T1-K8S-RP"
-  logical_router_id             = "${nsxt_logical_tier1_router.T1-K8S.id}"
-  linked_logical_router_port_id = "${nsxt_logical_router_link_port_on_tier0.T0-K8S-RP.id}"
+  display_name                  = "T1-DATA-SVCS-RP"
+  logical_router_id             = "${nsxt_logical_tier1_router.T1-DATA-SVCS.id}"
+  linked_logical_router_port_id = "${nsxt_logical_router_link_port_on_tier0.T0-DATA-SVCS-RP.id}"
 
   tag = {
     scope = "${var.COMP_SCOPE}"
@@ -321,12 +321,12 @@ resource "nsxt_logical_router_link_port_on_tier1" "T1-K8S-RP" {
   }
 }
 
-## Create PKS K8S Logical Switch
-resource "nsxt_logical_switch" "LS-K8S-PKS" {
+## Create Data Services Logical Switch
+resource "nsxt_logical_switch" "LS-DATA-SVCS" {
   count             = 1
   admin_state       = "UP"
   description       = "PKS mgmt provisioned by Terraform"
-  display_name      = "${var.LS_K8S_NAME}"
+  display_name      = "${var.LS_DATA_SVCS_NAME}"
   transport_zone_id = "${data.nsxt_transport_zone.TZ-OVERLAY.id}"
   replication_mode  = "MTEP"
 
@@ -337,12 +337,12 @@ resource "nsxt_logical_switch" "LS-K8S-PKS" {
 }
 
 ## Create ports on respective LS.
-resource "nsxt_logical_port" "LP-K8S-PKS" {
+resource "nsxt_logical_port" "LP-DATA-SVCS" {
   count             = 1
   admin_state       = "UP"
   description       = "LP-MGMT provisioned by Terraform"
-  display_name      = "${var.LP_K8S_NAME}"
-  logical_switch_id = "${nsxt_logical_switch.LS-K8S-PKS.id}"
+  display_name      = "${var.LP_DATA_SVCS_NAME}"
+  logical_switch_id = "${nsxt_logical_switch.LS-DATA-SVCS.id}"
 
   tag = {
     scope = "${var.COMP_SCOPE}"
@@ -350,14 +350,14 @@ resource "nsxt_logical_port" "LP-K8S-PKS" {
   }
 }
 
-## Create PKS K8S LIF on PKS K8S T1 DLR.
-resource "nsxt_logical_router_downlink_port" "K8S_DP1" {
+## Create Data Services LIF on Data Services T1 DLR.
+resource "nsxt_logical_router_downlink_port" "DATA_SVCS_DP1" {
   count                         = 1
-  description                   = "LIF-K8S provisioned by Terraform"
-  display_name                  = "LIF-K8S"
-  logical_router_id             = "${nsxt_logical_tier1_router.T1-K8S.id}"
-  linked_logical_switch_port_id = "${nsxt_logical_port.LP-K8S-PKS.id}"
-  ip_address                    = "${var.T1_K8S_IP_NET}"
+  description                   = "LIF-Data Services provisioned by Terraform"
+  display_name                  = "LIF-DATA-SVCS"
+  logical_router_id             = "${nsxt_logical_tier1_router.T1-DATA-SVCS.id}"
+  linked_logical_switch_port_id = "${nsxt_logical_port.LP-DATA-SVCS.id}"
+  ip_address                    = "${var.T1_DATA_SVCS_IP_NET}"
 
   tag = {
     scope = "${var.COMP_SCOPE}"

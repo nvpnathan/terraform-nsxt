@@ -6,9 +6,11 @@ This topology uses corporately routeable networks for all Management and Kuberne
 
 In this topology all Kubernetes Master(s) and Worker(s) nodes will be accessible by their corporate IP Address from the routeable **IP Block** for the **K8s Cluster Node Networks**. This configuration is done by removing the checkmark in the **NAT mode** box in the **Networking** tab of the **PKS tile** in Opsman.
 
-**Note:** This IP Block **MUST** be owned by NSX and routeable throughout the physical network.
+**Note:** This IP Block and T1 Mgmt subnet **MUST** be owned by NSX and routeable throughout the physical network.
 ```
-NODE_IP_BLOCK = "ip-block-pks-node-routeable"
+NODE_IP_BLOCK_CIDR = "172.15.0.0/16"
+T1_MGMT_IP_NET = "172.31.0.1/24"
+T1_DATA_SVCS_IP_NET = "172.31.2.1/24" (Optional)
 ```
 
 <img src="../images/routed-diagram.png">
@@ -42,3 +44,5 @@ NODE_IP_BLOCK = "ip-block-pks-node-routeable"
 * HA VIP
 * Static Route on the Physical Router for the IP Pool for VIPs
 * Static Route on the Physical Router for the IP Block for Nodes
+* Static Route on the Physical Router for the T1 Mgmt Subnet
+* Static Route on the Physical Router for the T1 Data Services Subnet (Optional)

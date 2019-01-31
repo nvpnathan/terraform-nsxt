@@ -159,29 +159,29 @@ variable "T1_MGMT_IP_NET" {
 
 ## PKS Data Services Topology Variables
 
-variable "T1_K8S_NAME" {
+variable "T1_DATA_SVCS_NAME" {
   type        = "string"
-  description = "name of the PKS K8S T1 router"
+  description = "Display Name of the PKS Data Services T1 router"
 }
 
-variable "T0_K8S_RP" {
+variable "T0_DATA_SVCS_RP" {
   type        = "string"
-  description = "Port to connect PKS K8S T1 to T0"
+  description = "Port to connect PKS Data Services T1 to T0"
 }
 
-variable "LS_K8S_NAME" {
+variable "LS_DATA_SVCS_NAME" {
   type        = "string"
-  description = "name of the PKS K8S logical switch"
+  description = "Display Name of the Data Services logical switch"
 }
 
-variable "LP_K8S_NAME" {
+variable "LP_DATA_SVCS_NAME" {
   type        = "string"
-  description = "name of the PKS K8S port on K8S logical switch"
+  description = "Display Name of the Data Services port on Data Services logical switch"
 }
 
-variable "T1_K8S_IP_NET" {
+variable "T1_DATA_SVCS_IP_NET" {
   type        = "string"
-  description = "K8s network gateway address"
+  description = "Data Services network gateway address"
 }
 
 ## IP Block variables

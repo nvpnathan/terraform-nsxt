@@ -73,17 +73,17 @@ LP_MGMT_NAME = "lp-mgmt-pks"
 
 T1_MGMT_IP_NET = "172.31.0.1/24"
 
-## PKS K8s Worker Node Topology Variables
+## Data Services Topology Variables
 
-T1_K8S_NAME = "t1-data-services"
+T1_DATA_SVCS_NAME = "t1-data-services"
 
-T0_K8S_RP = "t0-service-rp"
+T0_DATA_SVCS_RP = "t0-service-rp"
 
-LS_K8S_NAME = "ls-data-services"
+LS_DATA_SVCS_NAME = "ls-data-services"
 
-LP_K8S_NAME = "lp-data-services"
+LP_DATA_SVCS_NAME = "lp-data-services"
 
-T1_K8S_IP_NET = "172.31.2.1/23"
+T1_DATA_SVCS_IP_NET = "172.31.2.1/24"
 
 ## IP Block variables
 
