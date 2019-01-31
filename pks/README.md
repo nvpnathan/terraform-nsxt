@@ -1,4 +1,4 @@
-# NSX-T Terraform template for PKS Topologies
+# NSX-T Terraform templates for PKS Topologies
 
 ## Overview
 In this repo you will see 4 different folders representing a certain network architecture. Inside each of the folders is a Terraform template that build out that specific toplogy. The only requirement for you is to fill out the `terraform.tfvars` file in relation to your environment.
