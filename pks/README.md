@@ -62,3 +62,5 @@ In each of the network architectures, PKS requires these 4 networks or supernets
     * 172.17.0.0/16
     * 10.100.200.0/24 - Used for Kubernetes ClusterIP services so avoid this for the Nodes IP Block
 
+
+
