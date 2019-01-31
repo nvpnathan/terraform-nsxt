@@ -59,12 +59,6 @@ MGMT_SOURCE = "172.31.0.0/24"
 
 MGMT_TNET = "192.168.76.1"
 
-COMP_SNAT = "pks-comp-snat"
-
-COMP_SOURCE = "172.31.2.0/23"
-
-COMP_TNET = "192.168.76.50"
-
 ## Create MGMT DNAT Rules
 
 OPS_MAN_DNAT = "ops-man-dnat"
@@ -117,29 +111,13 @@ T1_K8S_IP_NET = "172.31.2.1/23"
 
 ## IP Block variables
 
-NODE_IP_BLOCK = "ip-block-pks-nodes-snat"
+NODE_IP_BLOCK = "ip-block-pks-node-snat"
 
 NODE_IP_BLOCK_CIDR = "172.15.0.0/16"
 
-NODE_IP_BLOCK_SUBNET = "ip-block-pks-node-subnet"
-
-NODE_SUBNET_SIZE = "16"
-
-NODE_SCOPE = "PKS-BLOCK"
-
-NODE_TAG = "NODE"
-
-POD_IP_BLOCK = "ip-block-pks-nodes-snat"
+POD_IP_BLOCK = "ip-block-pks-pod-snat"
 
 POD_IP_BLOCK_CIDR = "172.16.0.0/16"
-
-POD_IP_BLOCK_SUBNET = "ip-block-pks-pod-subnet"
-
-POD_SUBNET_SIZE = "16"
-
-POD_SCOPE = "PKS-BLOCK"
-
-POD_TAG = "POD"
 
 ## VIP Pool variables
 

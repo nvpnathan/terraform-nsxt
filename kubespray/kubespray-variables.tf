@@ -21,11 +21,6 @@ variable "TRUST_SSL_CERT" {
   description = "whether to trust ssl cert presented by server"
 }
 
-variable "T0_RTR" {
-  type        = "string"
-  description = "name of the T0 router"
-}
-
 variable "TZ_OVERLAY" {
   type        = "string"
   description = "name of the overlay transport zone"
@@ -34,6 +29,11 @@ variable "TZ_OVERLAY" {
 variable "EDGE_CLUSTER" {
   type        = "string"
   description = "name of the nsx edge cluster"
+}
+
+variable "T0_RTR" {
+  type        = "string"
+  description = "name of the T0 router"
 }
 
 ## Compute Scope and Tags

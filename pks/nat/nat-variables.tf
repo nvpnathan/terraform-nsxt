@@ -125,21 +125,6 @@ variable "MGMT_TNET" {
   description = "translated ip for the mgmt network"
 }
 
-variable "COMP_SNAT" {
-  type        = "string"
-  description = "name of the compute snat rule"
-}
-
-variable "COMP_SOURCE" {
-  type        = "string"
-  description = "source compute network"
-}
-
-variable "COMP_TNET" {
-  type        = "string"
-  description = "translated ip for the compute network"
-}
-
 ## Create MGMT DNAT Rules
 
 variable "OPS_MAN_DNAT" {
@@ -268,26 +253,6 @@ variable "NODE_IP_BLOCK_CIDR" {
   description = "CIDR format for the Nodes IP Block"
 }
 
-variable "NODE_IP_BLOCK_SUBNET" {
-  type        = "string"
-  description = "Display name of the Nodes IP Block Subnet"
-}
-
-variable "NODE_SUBNET_SIZE" {
-  type        = "string"
-  description = "Subnet size of the Nodes IP Block"
-}
-
-variable "NODE_SCOPE" {
-  type        = "string"
-  description = "Node Scope value"
-}
-
-variable "NODE_TAG" {
-  type        = "string"
-  description = "Node Tag value"
-}
-
 variable "POD_IP_BLOCK" {
   type        = "string"
   description = "Display name of the Pods IP Block"
@@ -296,26 +261,6 @@ variable "POD_IP_BLOCK" {
 variable "POD_IP_BLOCK_CIDR" {
   type        = "string"
   description = "CIDR format for the Pods IP Block"
-}
-
-variable "POD_IP_BLOCK_SUBNET" {
-  type        = "string"
-  description = "Display name of the Pods IP Block Subnet"
-}
-
-variable "POD_SUBNET_SIZE" {
-  type        = "string"
-  description = "Subnet size of the Pods IP Block"
-}
-
-variable "POD_SCOPE" {
-  type        = "string"
-  description = "Pod Scope value"
-}
-
-variable "POD_TAG" {
-  type        = "string"
-  description = "Pod Tag value"
 }
 
 ## VIP Pool variables

@@ -9,11 +9,11 @@ NSX_PASSWORD = "VMware1!"
 
 TRUST_SSL_CERT = "true"
 
-T0_RTR = "t0-pks"
-
 TZ_OVERLAY = "overlay-tz"
 
 EDGE_CLUSTER = "edge-cluster-1"
+
+T0_RTR = "t0-pks"
 
 ## Compute Scope and Tags
 

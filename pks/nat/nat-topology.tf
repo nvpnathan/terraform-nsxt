@@ -52,17 +52,17 @@ resource "nsxt_logical_tier0_router" "TIER0_ROUTER" {
   }
 }
 
-resource "nsxt_logical_port" "LOGICAL_PORT_UPLINK1" {
-  admin_state       = "UP"
-  description       = "LP1 provisioned by Terraform"
-  display_name      = "lsp_for_uplink_1"
-  logical_switch_id = "${nsxt_logical_switch.T0_UPLINK_VLAN_LS.id}"
+#resource "nsxt_logical_port" "LOGICAL_PORT_UPLINK1" {
+#  admin_state       = "UP"
+#  description       = "LP1 provisioned by Terraform"
+#  display_name      = "lsp_for_uplink_1"
+#  logical_switch_id = "${nsxt_logical_switch.T0_UPLINK_VLAN_LS.id}"
 
-  tag {
-    scope = "PKS"
-    tag   = "PORT"
-  }
-}
+#  tag {
+#    scope = "PKS"
+#    tag   = "PORT"
+#  }
+#}
 
 #resource "nsxt_logical_router_link_port_on_tier0" "TIER0_LINK_PORT1" {
 #  description                   = "TIER0_PORT1 provisioned by Terraform"
@@ -75,17 +75,17 @@ resource "nsxt_logical_port" "LOGICAL_PORT_UPLINK1" {
 #  }
 #}
 
-resource "nsxt_logical_port" "LOGICAL_PORT_UPLINK2" {
-  admin_state       = "UP"
-  description       = "LP1 provisioned by Terraform"
-  display_name      = "lsp_for_uplink_2"
-  logical_switch_id = "${nsxt_logical_switch.T0_UPLINK_VLAN_LS.id}"
+#resource "nsxt_logical_port" "LOGICAL_PORT_UPLINK2" {
+#  admin_state       = "UP"
+#  description       = "LP1 provisioned by Terraform"
+#  display_name      = "lsp_for_uplink_2"
+#  logical_switch_id = "${nsxt_logical_switch.T0_UPLINK_VLAN_LS.id}"
 
-  tag {
-    scope = "PKS"
-    tag   = "PORT"
-  }
-}
+#  tag {
+#    scope = "PKS"
+#    tag   = "PORT"
+#  }
+#}
 
 #resource "nsxt_logical_router_link_port_on_tier0" "TIER0_LINK_PORT2" {
 #  description                   = "TIER0_PORT1 provisioned by Terraform"
@@ -113,23 +113,6 @@ resource "nsxt_nat_rule" "rule1" {
   tag {
     scope = "${var.MGMT_SCOPE}"
     tag   = "${var.MGMT_TAG}"
-  }
-}
-
-resource "nsxt_nat_rule" "rule2" {
-  logical_router_id    = "${nsxt_logical_tier0_router.TIER0_ROUTER.id}"
-  description          = "PKS COMPUTE SNAT provisioned by Terraform"
-  display_name         = "${var.COMP_SNAT}"
-  action               = "SNAT"
-  enabled              = true
-  logging              = false
-  nat_pass             = true
-  translated_network   = "${var.COMP_TNET}"
-  match_source_network = "${var.COMP_SOURCE}"
-
-  tag {
-    scope = "${var.COMP_SCOPE}"
-    tag   = "${var.COMP_TAG}"
   }
 }
 
@@ -208,6 +191,7 @@ resource "nsxt_logical_tier1_router" "T1-MGMT" {
   display_name                = "${var.T1_MGMT_NAME}"
   enable_router_advertisement = "true"
   advertise_connected_routes  = "true"
+  failover_mode = "PREEMPTIVE"
 
   tag = [{
     scope = "${var.MGMT_SCOPE}"
@@ -371,33 +355,9 @@ resource "nsxt_ip_block" "node_ip_block" {
   cidr         = "${var.NODE_IP_BLOCK_CIDR}"
 }
 
-resource "nsxt_ip_block_subnet" "ip_block_node_subnet" {
-  description  = "node_ip_block_subnet provisioned by Terraform"
-  display_name = "${var.NODE_IP_BLOCK_SUBNET}"
-  block_id     = "${nsxt_ip_block.node_ip_block.id}"
-  size         = "${var.NODE_SUBNET_SIZE}"
-
-  tag = {
-    scope = "${var.NODE_SCOPE}"
-    tag   = "${var.NODE_TAG}"
-  }
-}
-
 resource "nsxt_ip_block" "pod_ip_block" {
   display_name = "${var.POD_IP_BLOCK}"
   cidr         = "${var.POD_IP_BLOCK_CIDR}"
-}
-
-resource "nsxt_ip_block_subnet" "ip_block_pod_subnet" {
-  description  = "pod_ip_block_subnet provisioned by Terraform"
-  display_name = "${var.POD_IP_BLOCK_SUBNET}"
-  block_id     = "${nsxt_ip_block.pod_ip_block.id}"
-  size         = "${var.POD_SUBNET_SIZE}"
-
-  tag = {
-    scope = "${var.POD_SCOPE}"
-    tag   = "${var.POD_TAG}"
-  }
 }
 
 ## Create VIP Pools
