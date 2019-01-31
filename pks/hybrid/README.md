@@ -4,7 +4,7 @@
 
 This topology uses corporately routeable networks for the PKS Management logical networking. Access the PKS management components by the corporate IP Address on the routed "PKS MGMT" network. Kubernetes clusters are accessed through the NSX Loadbalancer that is automatically instantiated at the time of cluster creation. 
 
-In this topology the Kubernetes Node networks are Private Networks that are allocated from the private **IP Block** for the **K8s Cluster Node Networks**. This configuration is done by putting a checkmark in the **NAT mode** box in the **Networking** tab of the **PKS tile** in Opsman.
+In this topology the Kubernetes Node networks are Private Networks that are allocated from the private **IP Block** for the **K8s Cluster Node Networks**. This configuration is done by putting a checkmark in the **NAT mode** box in the **Networking** section of the **PKS tile** in Opsman.
 
 **Note:** The IP Pool and T1 Mgmt subnet **MUST** be owned by NSX and routeable throughout the physical network.
 ```
