@@ -4,7 +4,7 @@
 
 This topology uses NAT for all Management and Kubernetes cluster(s) logical networking. Access to the PKS management components utilize DNAT rules created on the T0 to access the "PKS MGMT" network. Kubernetes clusters are accessed through the NSX Loadbalancer that is automatically instantiated at the time of cluster creation.
 
-In this topology the Kubernetes Node networks are Private Networks that are allocated from the **IP Block** for the **K8s Cluster Networks**. This configuration is done by putting a checkmark in the **NAT mode** box in the PKS tile in Opsman.
+In this topology the Kubernetes Node networks are Private Networks that are allocated from the private **IP Block** for the **K8s Cluster Node Networks**. This configuration is done by putting a checkmark in the **NAT mode** box in the **Networking** tab of the **PKS tile** in Opsman.
 
 <img src="../images/nat-diagram.png">
 

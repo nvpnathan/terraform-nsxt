@@ -130,85 +130,6 @@ variable "COMP_TAG" {
   description = "name of the comp tag"
 }
 
-## Create MGMT and Compute SNAT Rules
-
-variable "MGMT_SNAT" {
-  type        = "string"
-  description = "name of the mgmt snat rule"
-}
-
-variable "MGMT_SOURCE" {
-  type        = "string"
-  description = "source mgmt network"
-}
-
-variable "MGMT_TNET" {
-  type        = "string"
-  description = "translated ip for the mgmt network"
-}
-
-## Create MGMT DNAT Rules
-
-variable "OPSMAN_DNAT" {
-  type        = "string"
-  description = "name of the ops-manager dnat"
-}
-
-variable "OPSMAN_TIP" {
-  type        = "string"
-  description = "ops manager ip address"
-}
-
-variable "OPSMAN_DIP" {
-  type        = "string"
-  description = "ops manager translated ip address"
-}
-
-variable "BOSH_DNAT" {
-  type        = "string"
-  description = "name of the bosh dnat"
-}
-
-variable "BOSH_TIP" {
-  type        = "string"
-  description = "bosh ip address"
-}
-
-variable "BOSH_DIP" {
-  type        = "string"
-  description = "bosh translated ip address"
-}
-
-variable "PKS_CTRL_DNAT" {
-  type        = "string"
-  description = "name of the pks controller dnat"
-}
-
-variable "PKS_CTRL_TIP" {
-  type        = "string"
-  description = "pks controller ip address"
-}
-
-variable "PKS_CTRL_DIP" {
-  type        = "string"
-  description = "pks controller translated ip address"
-}
-
-variable "HARBOR_DNAT" {
-  type        = "string"
-  description = "name of the harbor dnat"
-}
-
-variable "HARBOR_TIP" {
-  type        = "string"
-  description = "harbor ip address"
-}
-
-variable "HARBOR_DIP" {
-  type        = "string"
-  description = "harbor translated ip address"
-}
-
 ## PKS MGMT Topology Variables
 
 variable "T1_MGMT_NAME" {
@@ -236,7 +157,7 @@ variable "T1_MGMT_IP_NET" {
   description = "MGMT network gateway address"
 }
 
-## PKS K8s Worker Node Topology Variables
+## PKS Data Services Topology Variables
 
 variable "T1_K8S_NAME" {
   type        = "string"

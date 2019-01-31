@@ -61,40 +61,6 @@ COMP_SCOPE = "pks"
 
 COMP_TAG = "k8s"
 
-## Create MGMT and Compute SNAT Rules
-
-MGMT_SNAT = "pks-mgmt-snat"
-
-MGMT_SOURCE = "172.31.0.0/24"
-
-MGMT_TNET = "192.168.76.1"
-
-## Create MGMT DNAT Rules
-
-OPSMAN_DNAT = "opsman-dnat"
-
-OPSMAN_TIP = "172.31.0.2"
-
-OPSMAN_DIP = "192.168.76.2"
-
-BOSH_DNAT = "pks-controller-dnat"
-
-BOSH_TIP = "172.31.0.3"
-
-BOSH_DIP = "192.168.76.3"
-
-PKS_CTRL_DNAT = "pks-controller-dnat"
-
-PKS_CTRL_TIP = "172.31.0.4"
-
-PKS_CTRL_DIP = "192.168.76.4"
-
-HARBOR_DNAT = "harbor-dnat"
-
-HARBOR_TIP = "172.31.0.5"
-
-HARBOR_DIP = "192.168.76.5"
-
 ## PKS MGMT Topology Variables
 
 T1_MGMT_NAME = "t1-pks-mgmt"
@@ -121,7 +87,7 @@ T1_K8S_IP_NET = "172.31.2.1/23"
 
 ## IP Block variables
 
-NODE_IP_BLOCK = "ip-block-pks-node-snat"
+NODE_IP_BLOCK = "ip-block-pks-node-routeable"
 
 NODE_IP_BLOCK_CIDR = "172.15.0.0/16"
 
