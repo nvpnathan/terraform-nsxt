@@ -16,7 +16,7 @@ T1_DATA_SVCS_IP_NET = "172.31.2.1/24" (Optional)
 
 <img src="../images/routed-diagram.png">
 
-### It expects this:
+### Prerequisites prior to Terraform Provisioning:
 * NSX Manager
 * NSX Controllers
 * NSX Edge Nodes

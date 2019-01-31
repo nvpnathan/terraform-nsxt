@@ -1,12 +1,24 @@
 # NSX-T Terraform template for PKS Topologies
 
 ## Overview
+In this repo you will see 4 different folders representing a certain network architecture. Inside each of the folders is a Terraform template that build out that specific toplogy. The only requirement for you is to fill out the `terraform.tfvars` file in relation to your environment.
+
+### Prerequisites prior to Terraform Provisioning:
+* NSX Manager
+* NSX Controllers
+* NSX Edge Nodes
+* NSX Edge Cluster
+* vSphere Clusters Prepped
+
+<img src="images/nsx-components.png">
+
+
 PKS with NSX-T supports four different network architectures and deployment models. 
 
 * [NAT](nat/README.md)
 * [Routed](routed/README.md)
 * [Hybrid](hybrid/README.md)
-* [Multi-T0](multi-t0/README.md)
+* [Multi-T0](multi-t0/README.md) 
 
 ## NSX-T Networks and purpose
 
