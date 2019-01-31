@@ -1,19 +1,21 @@
-# PKS NAT Topology
+# PKS Hybrid Topology
 
 ## Overview
 
-This topology uses NAT for all PKS Management and Kubernetes cluster(s) logical networking. Access to the PKS management components utilize DNAT rules created on the T0 to access the "PKS MGMT" network. Kubernetes clusters are accessed through the NSX Loadbalancer that is automatically instantiated at the time of cluster creation.
+This topology uses corporately routeable networks for the PKS Management logical networking. Access the PKS management components by the corporate IP Address on the routed "PKS MGMT" network. Kubernetes clusters are accessed through the NSX Loadbalancer that is automatically instantiated at the time of cluster creation. 
 
 In this topology the Kubernetes Node networks are Private Networks that are allocated from the private **IP Block** for the **K8s Cluster Node Networks**. This configuration is done by putting a checkmark in the **NAT mode** box in the **Networking** tab of the **PKS tile** in Opsman.
 
-**Note:** The IP Pool **MUST** be owned by NSX and routeable throughout the physical network.
+**Note:** The IP Pool and T1 Mgmt subnet **MUST** be owned by NSX and routeable throughout the physical network.
 ```
 VIP_IP_POOL1_CIDR = "192.168.75.0/24"
+T1_MGMT_IP_NET = "172.31.0.1/24"
+T1_DATA_SVCS_IP_NET = "172.31.2.1/24" (Optional)
 ```
 
-<img src="../images/nat-diagram.png">
+<img src="../images/hybrid-diagram.png">
 
-### Prerequisites prior to Terraform Provisioning:
+### It expects this:
 * NSX Manager
 * NSX Controllers
 * NSX Edge Nodes
@@ -25,11 +27,6 @@ VIP_IP_POOL1_CIDR = "192.168.75.0/24"
 ### Created by Terraform:
 * 1 T0 Router
     * T0 Default Route
-* DNAT Rules for PKS MGMT Private Network
-    * Opsman
-    * BOSH
-    * PKS Controller
-    * Harbor
 * 2 T1 Routers
     * 1 T1 PKS MGMT
     * 1 T1 PKS Data Services
@@ -46,3 +43,5 @@ VIP_IP_POOL1_CIDR = "192.168.75.0/24"
 * T0 Uplink Ports
 * HA VIP
 * Static Route on the Physical Router for the IP Pool for VIPs
+* Static Route on the Physical Router for the T1 Mgmt Subnet
+* Static Route on the Physical Router for the T1 Data Services Subnet (Optional)
