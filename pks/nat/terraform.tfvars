@@ -33,6 +33,14 @@ T0_SCOPE = "PKS"
 
 T0_TAG = "T0"
 
+## T0 Default Route (STATIC)
+
+T0_DEFAULT_ROUTE = "pks t0 default route"
+
+T0_ROUTE_SCOPE = "t0-pks-route"
+
+T0_ROUTE_TAG = "default"
+
 ## T0 Ports
 
 T0_UPLINK1_IP = "192.168.71.8/24"
@@ -61,11 +69,11 @@ MGMT_TNET = "192.168.76.1"
 
 ## Create MGMT DNAT Rules
 
-OPS_MAN_DNAT = "ops-man-dnat"
+OPSMAN_DNAT = "opsman-dnat"
 
-OPS_MAN_TIP = "172.31.0.2"
+OPSMAN_TIP = "172.31.0.2"
 
-OPS_MAN_DIP = "192.168.76.2"
+OPSMAN_DIP = "192.168.76.2"
 
 BOSH_DNAT = "pks-controller-dnat"
 

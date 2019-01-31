@@ -1,6 +1,9 @@
-# NSX-T Terraform template for PKS Topology
+# NSX-T Terraform template for PKS Topologies
 
 ## Overview
+PKS with NSX-T supports four different network architectures and deployment models. 
+
+
 
 ### It expects this:
 * NSX Manager
@@ -9,8 +12,11 @@
 * NSX Edge Cluster
 * vSphere Clusters Prepped
 
-### It creates this:
+<img src="images/nsx-components.png">
+
+### Created by Terraform:
 * 1 T0 Router
+    * T0 Default Route
 * NAT Rules for PKS MGMT
     * Opsman
     * BOSH
@@ -26,5 +32,11 @@
 * 2 IP Blocks
     * 1 IP Block for PKS Nodes
     * 1 IP Block for PKS Pods
-* 1 IP Pool for VIPS
-* 
+* 1 IP Pool for VIPs 
+
+### Create Manually
+* T0 Uplink Ports
+* HA VIP
+* Static Route on the Physical Router for the IP Pool for VIPs
+
+<img src="images/nat-topology.png">

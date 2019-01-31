@@ -52,6 +52,23 @@ resource "nsxt_logical_tier0_router" "TIER0_ROUTER" {
   }
 }
 
+resource "nsxt_static_route" "static_route" {
+  description       = "SR provisioned by Terraform"
+  display_name      = "${var.T0_DEFAULT_ROUTE}"
+  logical_router_id = "${nsxt_logical_tier0_router.TIER0_ROUTER.id}"
+  network           = "0.0.0.0/0"
+
+  next_hop {
+    ip_address              = "192.168.71.1"
+    administrative_distance = "1"
+  }
+
+  tag {
+    scope = "${var.T0_ROUTE_SCOPE}"
+    tag   = "${var.T0_ROUTE_TAG}"
+  }
+}
+
 #resource "nsxt_logical_port" "LOGICAL_PORT_UPLINK1" {
 #  admin_state       = "UP"
 #  description       = "LP1 provisioned by Terraform"
@@ -99,7 +116,7 @@ resource "nsxt_logical_tier0_router" "TIER0_ROUTER" {
 #}
 
 ## Create MGMT and Compute SNAT Rules
-resource "nsxt_nat_rule" "rule1" {
+resource "nsxt_nat_rule" "MGMT_SNAT" {
   logical_router_id    = "${nsxt_logical_tier0_router.TIER0_ROUTER.id}"
   description          = "PKS MGMT NAT provisioned by Terraform"
   display_name         = "${var.MGMT_SNAT}"
@@ -117,16 +134,16 @@ resource "nsxt_nat_rule" "rule1" {
 }
 
 ## Create MGMT DNAT Rules
-resource "nsxt_nat_rule" "rule3" {
+resource "nsxt_nat_rule" "OPSMAN_DNAT" {
   logical_router_id         = "${nsxt_logical_tier0_router.TIER0_ROUTER.id}"
   description               = "PKS Ops-Man DNAT provisioned by Terraform"
-  display_name              = "${var.OPS_MAN_DNAT}"
+  display_name              = "${var.OPSMAN_DNAT}"
   action                    = "DNAT"
   enabled                   = true
   logging                   = false
   nat_pass                  = true
-  translated_network        = "${var.OPS_MAN_TIP}"
-  match_destination_network = "${var.OPS_MAN_DIP}"
+  translated_network        = "${var.OPSMAN_TIP}"
+  match_destination_network = "${var.OPSMAN_DIP}"
 
   tag {
     scope = "${var.MGMT_SCOPE}"
@@ -134,7 +151,7 @@ resource "nsxt_nat_rule" "rule3" {
   }
 }
 
-resource "nsxt_nat_rule" "rule4" {
+resource "nsxt_nat_rule" "BOSH_DNAT" {
   logical_router_id         = "${nsxt_logical_tier0_router.TIER0_ROUTER.id}"
   description               = "PKS BOSH DNAT provisioned by Terraform"
   display_name              = "${var.BOSH_DNAT}"
@@ -151,7 +168,7 @@ resource "nsxt_nat_rule" "rule4" {
   }
 }
 
-resource "nsxt_nat_rule" "rule5" {
+resource "nsxt_nat_rule" "PKS_CTRL_DNAT" {
   logical_router_id         = "${nsxt_logical_tier0_router.TIER0_ROUTER.id}"
   description               = "PKS Controller DNAT provisioned by Terraform"
   display_name              = "${var.PKS_CTRL_DNAT}"
@@ -168,7 +185,7 @@ resource "nsxt_nat_rule" "rule5" {
   }
 }
 
-resource "nsxt_nat_rule" "rule6" {
+resource "nsxt_nat_rule" "HARBOR_DNAT" {
   logical_router_id         = "${nsxt_logical_tier0_router.TIER0_ROUTER.id}"
   description               = "PKS Harbor DNAT provisioned by Terraform"
   display_name              = "${var.HARBOR_DNAT}"

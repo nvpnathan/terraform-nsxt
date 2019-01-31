@@ -59,12 +59,32 @@ variable "T0_UPLINK_TAG" {
 ## T0 Router
 variable "T0_RTR" {
   type        = "string"
-  description = "name of the T0 router"
+  description = "Display name of the T0 router"
 }
 
 variable "T0_SCOPE" {
   type        = "string"
   description = "T0 Scope value"
+}
+
+variable "T0_TAG" {
+  type        = "string"
+  description = "T0 Tag value"
+}
+
+variable "T0_DEFAULT_ROUTE" {
+  type        = "string"
+  description = "Display name of the T0 Default Router"
+}
+
+variable "T0_ROUTE_SCOPE" {
+  type        = "string"
+  description = "T0 Route Scope value"
+}
+
+variable "T0_ROUTE_TAG" {
+  type        = "string"
+  description = "T0 Route Tag value"
 }
 
 ## T0 Router Ports
@@ -77,11 +97,6 @@ variable "T0_UPLINK1_IP" {
 variable "T0_UPLINK2_IP" {
   type        = "string"
   description = "T0 Uplink 2 IP 1.1.1.2/24 format"
-}
-
-variable "T0_TAG" {
-  type        = "string"
-  description = "T0 Tag value"
 }
 
 ## MGMT Scope and Tag
@@ -127,17 +142,17 @@ variable "MGMT_TNET" {
 
 ## Create MGMT DNAT Rules
 
-variable "OPS_MAN_DNAT" {
+variable "OPSMAN_DNAT" {
   type        = "string"
   description = "name of the ops-manager dnat"
 }
 
-variable "OPS_MAN_TIP" {
+variable "OPSMAN_TIP" {
   type        = "string"
   description = "ops manager ip address"
 }
 
-variable "OPS_MAN_DIP" {
+variable "OPSMAN_DIP" {
   type        = "string"
   description = "ops manager translated ip address"
 }
