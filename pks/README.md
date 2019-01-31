@@ -16,8 +16,11 @@ In this repo you will see 4 different folders representing a certain network arc
 PKS with NSX-T supports four different network architectures and deployment models. 
 
 * [NAT](nat/README.md)
+<img src="images/nat-diagram.png">
 * [Routed](routed/README.md)
+<img src="images/routed-diagram.png">
 * [Hybrid](hybrid/README.md)
+<img src="images/hybrid-diagram.png">
 * [Multi-T0](multi-t0/README.md) 
 
 ## NSX-T Networks and purpose
