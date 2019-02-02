@@ -76,9 +76,11 @@ This repo contains various Terraform templates for building out NSX-T logical co
     `:wq!`
 
     `terraform init`
+    
     <img src="images/terraform-init.png">
     
     `terraform version`
+
     <img src="images/terraform-version.png">
 
 6. Happy Terraforming!
