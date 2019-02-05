@@ -26,7 +26,7 @@ data "nsxt_edge_cluster" "EDGE-CLUSTER" {
 
 ## Create Uplink VLAN LS
 
-resource "nsxt_logical_switch" "T0_UPLINK_VLAN_LS" {
+resource "nsxt_vlan_logical_switch" "T0_UPLINK_VLAN_LS" {
   description       = "T0 Uplink VLAN LS provisioned by Terraform"
   display_name      = "${var.T0_UPLINK_VLAN_NAME}"
   transport_zone_id = "${data.nsxt_transport_zone.TZ-VLAN.id}"

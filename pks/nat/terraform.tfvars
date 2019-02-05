@@ -19,7 +19,7 @@ EDGE_CLUSTER = "edge-cluster-1"
 
 T0_UPLINK_VLAN_NAME = "uplink-vlan-ls"
 
-T0_UPLINK_VLAN_ID = "71"
+T0_UPLINK_VLAN_ID = "0"
 
 T0_UPLINK_SCOPE = "PKS"
 
