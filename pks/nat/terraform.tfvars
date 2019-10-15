@@ -129,6 +129,10 @@ POD_IP_BLOCK = "ip-block-pks-pod-snat"
 
 POD_IP_BLOCK_CIDR = "172.16.0.0/16"
 
+ROUTABLE_POD_IP_BLOCK = "ip-block-pks-pod-routable"
+
+ROUTABLE_POD_IP_BLOCK_CIDR = "192.168.82.0/23"
+
 ## VIP Pool variables
 
 IP_POOL_PKS_VIPS1 = "ip-pool1-vips"
@@ -140,3 +144,15 @@ POOL1_TAG = "POOL"
 VIP_IP_POOL1_RANGE = "192.168.75.10-192.168.75.250" 
 
 VIP_IP_POOL1_CIDR = "192.168.75.0/24"
+
+SEC_IP_POOL_PKS_VIPS2 = "ip-sec-pool1-vips"
+
+POOL2_SCOPE = "PKS"
+
+POOL2_TAG = "SECURITY POOL"
+
+SEC_VIP_IP_POOL2_RANGE = "192.168.76.10-192.168.76.250" 
+
+SEC_VIP_IP_POOL2_CIDR = "192.168.76.0/24"
+
+ENV_NAME = "vlab-pks-env"

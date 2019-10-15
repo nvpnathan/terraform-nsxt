@@ -119,7 +119,7 @@ resource "nsxt_static_route" "static_route" {
 resource "nsxt_nat_rule" "MGMT_SNAT" {
   logical_router_id    = "${nsxt_logical_tier0_router.TIER0_ROUTER.id}"
   description          = "PKS MGMT NAT provisioned by Terraform"
-  display_name         = "${var.MGMT_SNAT}"
+  display_name         = "${var.ENV_NAME}-${var.MGMT_SNAT}"
   action               = "SNAT"
   enabled              = true
   logging              = false
@@ -137,7 +137,7 @@ resource "nsxt_nat_rule" "MGMT_SNAT" {
 resource "nsxt_nat_rule" "OPSMAN_DNAT" {
   logical_router_id         = "${nsxt_logical_tier0_router.TIER0_ROUTER.id}"
   description               = "PKS Ops-Man DNAT provisioned by Terraform"
-  display_name              = "${var.OPSMAN_DNAT}"
+  display_name              = "${var.ENV_NAME}-${var.OPSMAN_DNAT}"
   action                    = "DNAT"
   enabled                   = true
   logging                   = false
@@ -154,7 +154,7 @@ resource "nsxt_nat_rule" "OPSMAN_DNAT" {
 resource "nsxt_nat_rule" "BOSH_DNAT" {
   logical_router_id         = "${nsxt_logical_tier0_router.TIER0_ROUTER.id}"
   description               = "PKS BOSH DNAT provisioned by Terraform"
-  display_name              = "${var.BOSH_DNAT}"
+  display_name              = "${var.ENV_NAME}-${var.BOSH_DNAT}"
   action                    = "DNAT"
   enabled                   = true
   logging                   = false
@@ -171,7 +171,7 @@ resource "nsxt_nat_rule" "BOSH_DNAT" {
 resource "nsxt_nat_rule" "PKS_CTRL_DNAT" {
   logical_router_id         = "${nsxt_logical_tier0_router.TIER0_ROUTER.id}"
   description               = "PKS Controller DNAT provisioned by Terraform"
-  display_name              = "${var.PKS_CTRL_DNAT}"
+  display_name              = "${var.ENV_NAME}-${var.PKS_CTRL_DNAT}"
   action                    = "DNAT"
   enabled                   = true
   logging                   = false
@@ -188,7 +188,7 @@ resource "nsxt_nat_rule" "PKS_CTRL_DNAT" {
 resource "nsxt_nat_rule" "HARBOR_DNAT" {
   logical_router_id         = "${nsxt_logical_tier0_router.TIER0_ROUTER.id}"
   description               = "PKS Harbor DNAT provisioned by Terraform"
-  display_name              = "${var.HARBOR_DNAT}"
+  display_name              = "${var.ENV_NAME}-${var.HARBOR_DNAT}"
   action                    = "DNAT"
   enabled                   = true
   logging                   = false
@@ -205,7 +205,7 @@ resource "nsxt_nat_rule" "HARBOR_DNAT" {
 ## Create PKS MGMT T1 Router.
 resource "nsxt_logical_tier1_router" "T1-MGMT" {
   description                 = "T1 provisioned by Terraform"
-  display_name                = "${var.T1_MGMT_NAME}"
+  display_name                = "${var.ENV_NAME}-${var.T1_MGMT_NAME}"
   enable_router_advertisement = "true"
   advertise_connected_routes  = "true"
   failover_mode = "PREEMPTIVE"
@@ -377,6 +377,11 @@ resource "nsxt_ip_block" "pod_ip_block" {
   cidr         = "${var.POD_IP_BLOCK_CIDR}"
 }
 
+resource "nsxt_ip_block" "routeable_pod_ip_block" {
+  display_name = "${var.ROUTABLE_POD_IP_BLOCK}"
+  cidr         = "${var.ROUTABLE_POD_IP_BLOCK_CIDR}"
+}
+
 ## Create VIP Pools
 
 resource "nsxt_ip_pool" "VIP_IP_POOL1" {
@@ -394,20 +399,17 @@ resource "nsxt_ip_pool" "VIP_IP_POOL1" {
   }
 }
 
-## Output UUIDs of T0, IP Blocks, IP Pools
+resource "nsxt_ip_pool" "SEC_VIP_IP_POOL2" {
+  description = "ip_pool provisioned by Terraform"
+  display_name = "${var.SEC_IP_POOL_PKS_VIPS2}"
 
-output "T0_ROUTER_ID" {
-  value = "${nsxt_logical_tier0_router.TIER0_ROUTER.id}"
-}
+  tag = {
+    scope = "${var.POOL2_SCOPE}"
+    tag   = "${var.POOL2_TAG}"
+  }
 
-output "NODES_IP_BLOCK" {
-  value = "${nsxt_ip_block.node_ip_block.id}"
-}
-
-output "PODS_IP_BLOCK" {
-  value = "${nsxt_ip_block.pod_ip_block.id}"
-}
-
-output "VIP_IP_POOL" {
-  value = "${nsxt_ip_pool.VIP_IP_POOL1.id}"
+  subnet = {
+    allocation_ranges = ["${var.SEC_VIP_IP_POOL2_RANGE}"]
+    cidr              = "${var.SEC_VIP_IP_POOL2_CIDR}"
+  }
 }

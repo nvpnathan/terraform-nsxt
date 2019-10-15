@@ -285,6 +285,16 @@ variable "POD_IP_BLOCK_CIDR" {
   description = "CIDR format for the Pods IP Block"
 }
 
+variable "ROUTABLE_POD_IP_BLOCK" {
+  type        = "string"
+  description = "Display name of the Pods IP Block"
+}
+
+variable "ROUTABLE_POD_IP_BLOCK_CIDR" {
+  type        = "string"
+  description = "CIDR format for the Pods IP Block"
+}
+
 ## VIP Pool variables
 
 variable "IP_POOL_PKS_VIPS1" {
@@ -310,4 +320,34 @@ variable "VIP_IP_POOL1_RANGE" {
 variable "VIP_IP_POOL1_CIDR" {
   type        = "string"
   description = "IP Pool CIDR for the Range"
+}
+
+variable "SEC_VIP_IP_POOL2_CIDR" {
+  type        = "string"
+  description = "IP Pool CIDR for the Range"
+}
+
+variable "SEC_IP_POOL_PKS_VIPS2" {
+  type        = "string"
+  description = "Display name of the Pods IP Block Subnet"
+}
+
+variable "POOL2_SCOPE" {
+  type        = "string"
+  description = "Pod Scope value"
+}
+
+variable "POOL2_TAG" {
+  type        = "string"
+  description = "Pod Tag value"
+}
+
+variable "SEC_VIP_IP_POOL2_RANGE" {
+  type        = "string"
+  description = "IP Pool range 1.1.1.10-1.1.1.250 format"
+}
+
+variable "ENV_NAME" {
+  type        = "string"
+  description = "Environment Name"
 }
