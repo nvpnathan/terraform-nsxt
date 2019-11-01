@@ -24,6 +24,6 @@ output "SEC_VIP_IP_POOL" {
   value = "${nsxt_ip_pool.SEC_VIP_IP_POOL2.id}"
 }
 
-output "Environment Name" {
+output "Environment_Name" {
   value = "${var.ENV_NAME}"
 }
