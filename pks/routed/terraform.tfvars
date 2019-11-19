@@ -1,9 +1,9 @@
 ## Global Provider and Data Variables
-NSX_MANAGER = "192.168.64.20"
+NSX_MANAGER = "vlab-nsx.vballin.com"
 
 NSX_USER = "admin"
 
-NSX_PASSWORD = "VMware1!"
+NSX_PASSWORD = "VMware1!VMware1!"
 
 TRUST_SSL_CERT = "true"
 
