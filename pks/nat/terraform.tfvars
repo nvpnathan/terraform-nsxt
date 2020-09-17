@@ -9,17 +9,17 @@ TRUST_SSL_CERT = "true"
 
 ## NSX Data collection
 
-TZ_OVERLAY = "overlay-tz"
+TZ_OVERLAY = "pks-overlay"
 
-TZ_VLAN = "vlan-tz"
+TZ_VLAN = "pks-vlan"
 
-EDGE_CLUSTER = "edge-cluster-1"
+EDGE_CLUSTER = "pks-edge-cluster-01"
 
 ## T0 Uplink VLAN LS
 
 T0_UPLINK_VLAN_NAME = "uplink-vlan-ls"
 
-T0_UPLINK_VLAN_ID = "0"
+T0_UPLINK_VLAN_ID = "71"
 
 T0_UPLINK_SCOPE = "PKS"
 
@@ -45,9 +45,9 @@ T0_DEFAULT_ROUTE_NEXT_HOP_IP = "192.168.71.1"
 
 ## T0 Ports
 
-T0_UPLINK1_IP = "192.168.71.8/24"
+T0_UPLINK1_IP = "192.168.71.18/24"
 
-T0_UPLINK2_IP = "192.168.71.9/24"
+T0_UPLINK2_IP = "192.168.71.19/24"
 
 ## MGMT Scope and Tag
 
